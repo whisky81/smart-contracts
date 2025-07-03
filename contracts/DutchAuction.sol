@@ -2,14 +2,9 @@
 // Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.27;
 
-import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import {ERC721Burnable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
+import {ERC721A} from "./ERC721A.sol";
 
-contract DutchAuction is ERC721, ERC721Burnable, Ownable {
-    using Strings for uint256;
-    uint256 private _nextTokenId;
+contract DutchAuction is ERC721A {
 
     // AUCTION State Variables
     uint256 public constant COLLECTION_SIZE = 10000;
@@ -22,31 +17,15 @@ contract DutchAuction is ERC721, ERC721Burnable, Ownable {
         (AUCTION_TIME / AUCTION_DROP_INTERNAL);
     uint256 public auctionStartTime;
 
+    error ExceedsCollectionSize(uint256 size);
 
-    constructor(address initialOwner)
-        ERC721("Whisky", "WK")
-        Ownable(initialOwner)
-    {}
+    constructor(address initialOwner) ERC721A(initialOwner) {}
 
     function _baseURI() internal pure override returns (string memory) {
-        return "ipfs://{cid}/";
-    }
-
-    function tokenURI(uint256 tokenId) public view override returns (string memory) {
-        _requireOwned(tokenId);
-
-        string memory baseURI = _baseURI();
-        return bytes(baseURI).length > 0 ? string.concat(baseURI, tokenId.toString(), ".json") : "";
-    }
-
-    function safeMint(address to) public onlyOwner returns (uint256) {
-        uint256 tokenId = _nextTokenId++;
-        _safeMint(to, tokenId);
-        return tokenId;
+        return "ipfs://<cid>/";
     }
 
     // Auction Functions
-    error ExceedsCollectionSize(uint256 size);
 
     function setAuctionStartTime() public onlyOwner {
         if (_nextTokenId >= COLLECTION_SIZE) {
