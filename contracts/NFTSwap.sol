@@ -61,7 +61,6 @@ contract NFTSwap is IERC721Receiver {
         require(nft.ownerOf(tokenId) == address(this), "Invalid Order");
 
         nft.safeTransferFrom(address(this), msg.sender, tokenId);
-        delete nftList[nftAddr][tokenId];
 
         payable(order.owner).transfer(order.price);
         if (msg.value > order.price) {
@@ -69,6 +68,8 @@ contract NFTSwap is IERC721Receiver {
         }
         
         emit Purchase(msg.sender, nftAddr, tokenId, order.price);
+
+        delete nftList[nftAddr][tokenId];
     }
 
     function _checkOwnerAndOrder(address nftAddr, uint256 tokenId, address auth) internal view returns(IERC721 nft) {
