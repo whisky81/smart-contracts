@@ -53,6 +53,8 @@ contract WhitelistSignatureNFT is ERC721, Ownable {
 
         require(ECDSA.verify(hash, signature, owner()), "Invalid Signature");
         require(!_mintedAddr[to], "Already Mint");
+
+        require(_ownerOf(tokenId) == address(0), "Minted NFT");
         
         _mintedAddr[to] = true;
         _safeMint(to, tokenId);
