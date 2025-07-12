@@ -4,7 +4,7 @@ pragma solidity ^0.8.27;
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
-/// initialOwner: 0xdaf6e75eaba1ed47648031fd0183c7baa87ac175
+/// initialOwner(signer): 0xdaf6e75eaba1ed47648031fd0183c7baa87ac175
 /// account: 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4
 /// tokenId: 0
 /// signature: 0xb11184c3dede1154b9496ecf56ddfbdafabdea6d5ca61a7c6c6f9abe74c65b5501bb2f68fddb5ee9500d40f11b59daf65f61a409ebcad701f90491c51e3de36e1b
