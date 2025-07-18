@@ -11,6 +11,7 @@ contract Caller {
     function increment() external returns(uint) {
         (bool success, bytes memory data) = proxy.call(abi.encodeWithSignature("increment()"));
         require(success, "Call failed");
+
         return abi.decode(data, (uint));
     }
 }
