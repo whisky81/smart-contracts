@@ -15,6 +15,10 @@ library ECDSA {
         return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", hash));
     }
 
+    function toEthSignedMessageV2(bytes32 dataToSign) internal pure returns(bytes32) {
+        return keccak256(abi.encodePacked(bytes1(0x19), bytes1(0x45), "thereum Signed Message:\n32", dataToSign));
+    }
+
     function recoverSigner(bytes32 hash, bytes memory signature) internal pure returns(address) {
         require(signature.length == 65, "Invalid Signature");
         bytes32 r;
@@ -49,7 +53,8 @@ contract WhitelistSignatureNFT is ERC721, Ownable {
     function safeMint(address to, uint tokenId, bytes memory signature) external returns (uint256) {
         require(tokenId < COLLECTION_SIZE, "Out of range collection size");
         bytes32 msgHash = getMessageHash(to, tokenId);
-        bytes32 hash = ECDSA.toEthSignedMessage(msgHash);
+        // bytes32 hash = ECDSA.toEthSignedMessage(msgHash);
+        bytes32 hash = ECDSA.toEthSignedMessageV2(msgHash);
 
         require(ECDSA.verify(hash, signature, owner()), "Invalid Signature");
         require(!_mintedAddr[to], "Already Mint");
