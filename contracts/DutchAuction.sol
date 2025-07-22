@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
-// Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.27;
 
-import {ERC721A} from "./ERC721A.sol";
+import {ERC721A} from "./ERC721/ERC721A.sol";
 
 contract DutchAuction is ERC721A {
 
