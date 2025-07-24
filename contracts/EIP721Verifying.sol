@@ -9,7 +9,7 @@ pragma solidity ^0.8.27;
 
 
 
-contract EIP721Verifying {
+contract EIP712Verifying {
     struct EIP712Domain {
         string name;
         string version;
